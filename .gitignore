@@ -1,0 +1,9 @@
+# Claves y configuración sensible — nunca se sube al repositorio
+js/config.js
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Dependencias (si en el futuro se agrega Node para build tools)
+node_modules/

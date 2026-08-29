@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KIHS — Buscador de imágenes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===================== ENCABEZADO / BUSCADOR ===================== -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">◐</span>
+      <span class="brand-name">KIHS</span>
+    </div>
+
+    <form id="search-form" class="search-form" autocomplete="off">
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Busca imágenes: montañas, café, arquitectura…"
+        aria-label="Buscar imágenes"
+      >
+      <button type="submit" class="search-btn" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5L20.49 19l-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+      </button>
+    </form>
+  </header>
+
+  <!-- ===================== HERRAMIENTAS DE BÚSQUEDA ===================== -->
+  <div class="tools-bar">
+    <button id="tools-toggle" class="tools-toggle" aria-expanded="false">
+      <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+      Herramientas de búsqueda
+      <span class="chevron">⌄</span>
+    </button>
+    <button id="clear-filters" class="clear-filters hidden">Borrar filtros</button>
+  </div>
+
+  <!-- Panel desplegable con las secciones -->
+  <nav id="tools-panel" class="tools-panel" hidden>
+
+    <div class="tool-section" data-section="tamano">
+      <button class="tool-tab" data-tab="tamano">Tamaño <span class="tool-tab-value"></span></button>
+      <div class="tool-dropdown">
+        <button data-filter="tamano" data-value="cualquiera" class="option active">Cualquier tamaño</button>
+        <button data-filter="tamano" data-value="grande" class="option">Grandes</button>
+        <button data-filter="tamano" data-value="mediano" class="option">Medianos</button>
+        <button data-filter="tamano" data-value="icono" class="option">Iconos</button>
+      </div>
+    </div>
+
+    <div class="tool-section" data-section="color">
+      <button class="tool-tab" data-tab="color">Color <span class="tool-tab-value"></span></button>
+      <div class="tool-dropdown">
+        <button data-filter="color" data-value="cualquiera" class="option active">Cualquier color</button>
+        <button data-filter="color" data-value="byn" class="option">Blanco y negro</button>
+        <button data-filter="color" data-value="transparente" class="option">Transparentes</button>
+        <div class="palette">
+          <button data-filter="color" data-value="rojo" class="swatch" style="--sw:#e14e4e" title="Rojo"></button>
+          <button data-filter="color" data-value="naranja" class="swatch" style="--sw:#e8873a" title="Naranja"></button>
+          <button data-filter="color" data-value="amarillo" class="swatch" style="--sw:#e4c53a" title="Amarillo"></button>
+          <button data-filter="color" data-value="verde" class="swatch" style="--sw:#4caf6d" title="Verde"></button>
+          <button data-filter="color" data-value="azul" class="swatch" style="--sw:#3f7fe0" title="Azul"></button>
+          <button data-filter="color" data-value="morado" class="swatch" style="--sw:#8a5fd6" title="Morado"></button>
+          <button data-filter="color" data-value="rosa" class="swatch" style="--sw:#e068a8" title="Rosa"></button>
+          <button data-filter="color" data-value="cafe" class="swatch" style="--sw:#8a5a3c" title="Café"></button>
+          <button data-filter="color" data-value="negro" class="swatch" style="--sw:#222226" title="Negro"></button>
+          <button data-filter="color" data-value="gris" class="swatch" style="--sw:#9aa0a6" title="Gris"></button>
+          <button data-filter="color" data-value="blanco" class="swatch swatch-white" style="--sw:#ffffff" title="Blanco"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tool-section" data-section="tipo">
+      <button class="tool-tab" data-tab="tipo">Tipo <span class="tool-tab-value"></span></button>
+      <div class="tool-dropdown">
+        <button data-filter="tipo" data-value="cualquiera" class="option active">Cualquier tipo</button>
+        <button data-filter="tipo" data-value="clipart" class="option">Clip art</button>
+        <button data-filter="tipo" data-value="lineal" class="option">Dibujo lineal</button>
+        <button data-filter="tipo" data-value="gif" class="option">GIF animado</button>
+      </div>
+    </div>
+
+    <div class="tool-section" data-section="fecha">
+      <button class="tool-tab" data-tab="fecha">Fecha <span class="tool-tab-value"></span></button>
+      <div class="tool-dropdown">
+        <button data-filter="fecha" data-value="cualquiera" class="option active">De cualquier fecha</button>
+        <button data-filter="fecha" data-value="24h" class="option">Últimas 24 horas</button>
+        <button data-filter="fecha" data-value="semana" class="option">Última semana</button>
+        <button data-filter="fecha" data-value="anio" class="option">Último año</button>
+      </div>
+    </div>
+
+    <div class="tool-section" data-section="derechos">
+      <button class="tool-tab" data-tab="derechos">Derechos de uso <span class="tool-tab-value"></span></button>
+      <div class="tool-dropdown">
+        <button data-filter="derechos" data-value="cualquiera" class="option active">Cualquier licencia</button>
+        <button data-filter="derechos" data-value="cc" class="option">Licencias Creative Commons</button>
+        <button data-filter="derechos" data-value="comercial" class="option">Licencias comerciales</button>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- ===================== CONTADOR DE RESULTADOS ===================== -->
+  <p id="results-stats" class="results-stats"></p>
+
+  <!-- ===================== ESTADOS ===================== -->
+  <div id="status-banner" class="status-banner hidden"></div>
+
+  <!-- ===================== REJILLA DE RESULTADOS ===================== -->
+  <main>
+    <section id="results-grid" class="results-grid" aria-live="polite"></section>
+    <div id="empty-state" class="empty-state hidden">
+      <p>No encontramos imágenes para tu búsqueda.</p>
+      <span>Prueba con otra palabra clave o quita algunos filtros.</span>
+    </div>
+  </main>
+
+  <!-- Plantilla para toast de descarga -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- GSAP con fallback nativo si el CDN falla -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <!-- config.js debe cargar ANTES que app.js: contiene la Access Key -->
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
