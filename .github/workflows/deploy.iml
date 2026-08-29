@@ -1,0 +1,47 @@
+name: Deploy KIHS a GitHub Pages
+
+# Se ejecuta cada vez que se hace push a la rama main
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:   # también permite ejecutarlo manualmente desde la pestaña Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el código del repositorio
+        uses: actions/checkout@v4
+
+      - name: Generar js/config.js con la Access Key secreta
+        # Usamos awk (no sed) para evitar problemas si la key contuviera
+        # caracteres especiales que rompan la sustitución.
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        run: |
+          awk -v key="$UNSPLASH_ACCESS_KEY" '{
+            gsub(/TU_ACCESS_KEY_AQUI/, key);
+            print
+          }' js/config.example.js > js/config.js
+          echo "config.js generado correctamente (sin exponer la key en los logs)."
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Subir artefacto del sitio
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
